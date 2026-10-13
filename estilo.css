@@ -298,17 +298,17 @@ body {
  *
  * Con un cuadro más ancho el cartel entero se lee: el cliente ve el
  * compresor, los litros y los HP, que es justo para lo que está mirando. */
-.th-foto { width: 12rem; }
+.th-foto { width: 15rem; }
 
 .td-foto {
-  width: 12rem;
+  width: 15rem;
   padding-right: 0.7rem !important;
 }
 
 .foto-mini {
   display: block;
-  width: 11.3rem;
-  height: 7.6rem;
+  width: 14.3rem;
+  height: 9.6rem;
   overflow: hidden;
   border: 1px solid var(--borde);
   border-radius: 7px;
