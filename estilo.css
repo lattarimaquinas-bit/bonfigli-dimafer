@@ -1,0 +1,733 @@
+/* Catálogo BONFIGLI / DIMAFER */
+
+:root {
+  --primario: #0d5c4e;
+  --primario-luz: #e8f2ef;
+  --texto: #17211e;
+  --gris: #5f6b67;
+  --gris-claro: #8a938f;
+  --borde: #e2e6e4;
+  --fondo: #f6f7f6;
+  --papel: #fff;
+  --verde: #15703c;
+  --radio: 12px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--fondo);
+  color: var(--texto);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+.contenedor { width: min(1080px, 100% - 2rem); margin-inline: auto; }
+
+/* --- barra --- */
+
+.barra {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: saturate(180%) blur(12px);
+  border-bottom: 1px solid var(--borde);
+}
+
+.barra-caja {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.6rem 0;
+}
+
+.marca {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  text-decoration: none;
+  color: inherit;
+  font-weight: 800;
+}
+
+/* El logo en la franja verde de arriba.
+
+ * "hidden" no alcanza para sacarlo de la pantalla: si el navegador no lo
+ * respeta (o si el logo no llegó a cargar), queda un huequito vacío al lado de
+ * la palabra "Catálogo". Por eso el alto se pone en cero y no en auto. */
+.marca-logo {
+  display: block;
+  width: auto;
+  height: 2rem;
+  max-width: 9.5rem;
+  object-fit: contain;
+  margin: 0;
+}
+
+.marca-logo[hidden],
+.portada-logo[hidden] { display: none; }
+
+.marca small {
+  display: block;
+  font-weight: 500;
+  font-size: 0.72rem;
+  color: var(--gris);
+  line-height: 1;
+  margin-top: 2px;
+}
+
+.selector-empresa {
+  display: flex;
+  gap: 0.25rem;
+  margin-left: auto;
+  padding: 0.2rem;
+  background: var(--fondo);
+  border: 1px solid var(--borde);
+  border-radius: 10px;
+}
+
+.emp {
+  padding: 0.4rem 0.9rem;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: var(--gris);
+  font: inherit;
+  font-size: 0.86rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.emp.activo { background: var(--primario); color: #fff; }
+
+.boton-whatsapp {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.55rem 1rem;
+  background: #128c4a;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.88rem;
+  border-radius: 9px;
+  white-space: nowrap;
+}
+
+.boton-whatsapp:hover { background: #0e7039; }
+
+/* --- portada --- */
+
+.portada { padding: clamp(2rem, 6vw, 3.5rem) 0 1.5rem; }
+
+/* El logo grande de la portada. El alto se acota para que el de BONFIGLI, que
+ * es muy alargado y finito, no quede diminuto al lado del de DIMAFER, que es
+ * alto. Con el ancho máximo solo, uno de los dos se ve mucho más chico. */
+.portada-logo {
+  display: block;
+  width: auto;
+  height: clamp(2.8rem, 7vw, 4.2rem);
+  max-width: min(20rem, 75%);
+  object-fit: contain;
+  object-position: left center;
+  margin-bottom: 1.1rem;
+}
+
+/* El nombre de la empresa se queda escrito, pero sin que se vea a simple vista:
+ * ahora el logo ya dice BONFIGLI o DIMAFER en grande, y con las dos cosas a la
+ * vez queda repetido.
+ *
+ * No se borra del todo porque hay dos cosas que lo necesitan aunque no se vea:
+ * el buscador de Google lo usa para saber de qué trata la página, y un lector de
+ * pantalla lo lee en voz alta para alguien que no ve el logo. */
+.portada h1 {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* Tu nombre. Va pegado al nombre de la empresa porque es la misma pregunta:
+   "quién me vende esto". Con la etiqueta "Te atiende" se entiende que hay una
+   persona atrás, no solo una empresa. */
+.representante {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin: 0.5rem 0 0;
+  font-size: 1rem;
+}
+
+.representante-etiqueta {
+  padding: 0.15rem 0.6rem;
+  border-radius: 999px;
+  background: var(--primario);
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.bajada { margin: 0.6rem 0 0; color: var(--gris); font-size: 1.05rem; }
+
+.conteo {
+  margin: 0.8rem 0 0;
+  font-size: 0.86rem;
+  color: var(--gris-claro);
+  font-variant-numeric: tabular-nums;
+}
+
+/* --- buscador --- */
+
+.buscador {
+  position: sticky;
+  top: 3.5rem;
+  z-index: 10;
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  padding: 0.7rem;
+  margin-bottom: 1rem;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: saturate(180%) blur(12px);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+}
+
+.campo {
+  flex: 1 1 240px;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.8rem;
+  background: var(--fondo);
+  border: 1px solid var(--borde);
+  border-radius: 9px;
+}
+
+.campo svg { color: var(--gris-claro); flex: none; }
+
+.campo input {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  color: inherit;
+}
+
+.campo input:focus { outline: 0; }
+
+.selector-familia {
+  padding: 0.5rem 0.7rem;
+  background: var(--papel);
+  border: 1px solid var(--borde);
+  border-radius: 9px;
+  font: inherit;
+  font-size: 0.9rem;
+  color: var(--texto);
+  max-width: 260px;
+}
+
+.resultado {
+  margin: 0 0 0.8rem;
+  font-size: 0.85rem;
+  color: var(--gris);
+}
+
+/* --- tabla --- */
+
+.tabla {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--papel);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+  overflow: hidden;
+  font-size: 0.92rem;
+}
+
+.tabla th {
+  padding: 0.6rem 0.8rem;
+  background: #f2f4f3;
+  border-bottom: 1px solid var(--borde);
+  text-align: left;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gris);
+  white-space: nowrap;
+}
+
+.tabla td {
+  padding: 0.55rem 0.8rem;
+  border-bottom: 1px solid var(--borde);
+}
+
+.tabla tbody tr:last-child td { border-bottom: 0; }
+.tabla tbody tr:hover { background: var(--primario-luz); }
+
+.der { text-align: right; }
+.centro { text-align: center; width: 3rem; }
+
+/* --- la foto del producto ---
+ *
+ * Chiquita y cuadrada al costado. Las fotos de catálogo son hojas rectangulares
+ * con la tabla de medidas y el logo de la marca, así que no se pueden mostrar
+ * enteras sin que la tabla se convierta en un muro de imágenes. Va chica y al
+ * tocarla se abre en grande, en otra pestaña.
+ *
+ * La columna tiene ancho fijo (th-foto, td-foto) porque si no, un producto con
+ * foto y otro sin ella desalinean toda la columna y los precios dejan de
+ * caer en la misma línea. */
+.th-foto { width: 5.5rem; }
+
+.td-foto {
+  width: 5.5rem;
+  padding-right: 0.5rem !important;
+}
+
+.foto-mini {
+  display: block;
+  width: 4.2rem;
+  height: 4.2rem;
+  overflow: hidden;
+  border: 1px solid var(--borde);
+  border-radius: 7px;
+  background: #fff;
+}
+
+.foto-mini img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  transition: transform 0.15s;
+}
+
+/* Al pasar el mouse la foto se agranda un poco dentro del mismo cuadro: da
+   señal de que se puede tocar sin agrandar la fila. */
+.foto-mini:hover img { transform: scale(1.08); }
+
+.codigo {
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+  font-size: 0.84rem;
+  color: var(--gris);
+  white-space: nowrap;
+}
+
+.producto { font-weight: 600; }
+
+.familia-col {
+  font-size: 0.8rem;
+  color: var(--primario);
+  white-space: nowrap;
+}
+
+.precio {
+  font-weight: 700;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.agregar {
+  width: 1.7rem;
+  height: 1.7rem;
+  border: 1px solid var(--borde);
+  border-radius: 6px;
+  background: var(--papel);
+  color: #128c4a;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.agregar:hover { background: #128c4a; color: #fff; border-color: #128c4a; }
+
+/* La cajita de cantidad.
+ *
+ * Chica a propósito: si ocupa mucho, empuja la foto y la descripción y en un
+ * celular la tabla deja de caber. Texto libre, no type="number", porque el
+ * cliente escribe "3", pero también "2 cajas" o "10 mts", y con un campo de
+ * números eso no se puede escribir. */
+.input-cantidad {
+  width: 4.6rem;
+  padding: 0.3rem 0.35rem;
+  border: 1px solid var(--borde);
+  border-radius: 6px;
+  background: var(--papel);
+  color: var(--tinta);
+  font-size: 0.85rem;
+  text-align: center;
+}
+.input-cantidad:focus {
+  outline: 2px solid #128c4a;
+  outline-offset: 1px;
+  border-color: #128c4a;
+}
+/* Lo que el cliente escribió tiene que verse de un vistazo: lo que busca es su
+   lista de pedido, no un formulario para completar. */
+.input-cantidad:not(:placeholder-shown) {
+  border-color: #128c4a;
+  background: #eef7f1;
+  font-weight: 600;
+}
+
+.celda-cant { white-space: nowrap; }
+.th-cant { font-size: 0.7rem; }
+
+/* La etiqueta "Cant." al lado de la cajita. En la tabla no se muestra porque
+   la columna ya lo dice; en la tarjeta del celular sí, porque ahí el
+   encabezado desaparece y sin esto el cliente no sabe qué va en la cajita. */
+.etiqueta-cant { display: none; }
+
+/* Aviso de cuántos productos ya están anotados. */
+.aviso-pedido {
+  margin: -0.4rem 0 0.8rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #128c4a;
+}
+
+.vacio {
+  margin: 2rem 0;
+  padding: 2rem 1rem;
+  text-align: center;
+  color: var(--gris);
+  background: var(--papel);
+  border: 1px dashed var(--borde);
+  border-radius: var(--radio);
+}
+
+.boton-linea {
+  display: block;
+  margin: 0.8rem auto 0;
+  padding: 0.4rem 0.9rem;
+  background: transparent;
+  border: 1px solid var(--borde);
+  border-radius: 7px;
+  color: var(--primario);
+  font: inherit;
+  font-size: 0.87rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.pie-tabla { margin: 1rem 0 0; font-size: 0.8rem; color: var(--gris-claro); }
+
+/* --- la paginación ---
+ *
+ * Va abajo de la tabla, no arriba: el buscador de arriba ya está fijo y es lo
+ * que se usa. Los números están en el medio con "Anterior" y "Ver más" a los
+ * lados, para que en un celular se puedan apretar sin errar.
+ *
+ * "Ver más" y "Siguiente" son lo mismo, pero con dos nombres: el que toca por
+ * costumbre y el que dice para qué sirve. */
+.paginacion {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+  margin-top: 1.2rem;
+  flex-wrap: wrap;
+}
+
+.paginacion[hidden] { display: none; }
+
+.paginas {
+  display: flex;
+  gap: 0.25rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.pagina {
+  min-width: 2.2rem;
+  padding: 0.4rem 0.6rem;
+  border: 1px solid var(--borde);
+  border-radius: 7px;
+  background: var(--papel);
+  color: var(--gris);
+  font: inherit;
+  font-size: 0.87rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.pagina:hover:not(:disabled) { border-color: var(--primario); color: var(--primario); }
+
+.pagina.activa {
+  background: var(--primario);
+  border-color: var(--primario);
+  color: #fff;
+  cursor: default;
+}
+
+.pagina:disabled { opacity: 0.4; cursor: default; }
+
+.pagina.flecha, .pagina.ver-mas { white-space: nowrap; }
+
+.pagina.ver-mas {
+  background: var(--primario);
+  border-color: var(--primario);
+  color: #fff;
+  font-weight: 700;
+}
+
+.pagina.ver-mas:hover:not(:disabled) { background: #0a463b; color: #fff; }
+.pagina.ver-mas:disabled { background: var(--papel); color: var(--gris); }
+
+.puntos { padding: 0.4rem 0.2rem; color: var(--gris-claro); }
+
+/* --- el catálogo para pasar hojas ---
+
+ * El botón de la portada. Va debajo del conteo de productos, no al lado: al
+ * lado parecía un botón más de la barra y el cliente no lo tomaba como otra
+ * cosa. */
+.boton-catalogo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1.1rem;
+  padding: 0.7rem 1.15rem;
+  border: 1.5px solid var(--primario);
+  border-radius: 10px;
+  background: var(--papel);
+  color: var(--primario);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.boton-catalogo:hover { background: var(--primario); color: #fff; }
+
+.boton-catalogo[hidden] { display: none; }
+
+/* Los dos botones de la portada van uno al lado del otro, no apilados: ver las
+   hojas y bajar el PDF son la misma acción de dos maneras. Si en un celular no
+   entran, se apilan solos y no se rompe nada. */
+.boton-descargar {
+  margin-left: 0.5rem;
+  text-decoration: none;
+}
+
+/* El visor es una pantalla completa sobre la página. El fondo va con una
+ * vuelta oscura y un poco de transparente: si fuera opaco, el cliente no
+ * vería que la página sigue ahí atrás y no entiende dónde volvió. */
+.visor {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.visor[hidden] { display: none; }
+
+.visor-fondo {
+  position: absolute;
+  inset: 0;
+  background: rgba(12, 20, 17, 0.82);
+}
+
+.visor-caja {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: min(58rem, 100%);
+  /* El alto se limita con dvh y no con px: en el celular, cuando aparece el
+   * teclado o la barra de direcciones, dvh achica el visor y la hoja se ve
+   * entera en lugar de quedar cortada. */
+  max-height: 92dvh;
+  background: var(--papel);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+}
+
+.visor-barra {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.7rem 1rem;
+  border-bottom: 1px solid var(--borde);
+  flex: none;
+}
+
+.visor-marco {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding: 0.75rem;
+  background: #eef0ee;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.visor-marco img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 6px;
+  background: #fff;
+}
+
+.visor-pie {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.7rem 1rem;
+  border-top: 1px solid var(--borde);
+  flex: none;
+}
+
+.visor-boton {
+  padding: 0.5rem 0.95rem;
+  border: 1px solid var(--borde);
+  border-radius: 8px;
+  background: var(--papel);
+  color: var(--gris);
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.visor-boton:hover:not(:disabled) { border-color: var(--primario); color: var(--primario); }
+.visor-boton:disabled { opacity: 0.4; cursor: default; }
+
+.visor-contador {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--gris);
+  white-space: nowrap;
+}
+
+@media (max-width: 560px) {
+  .visor { padding: 0; }
+  .visor-caja { max-height: 100dvh; border-radius: 0; height: 100dvh; }
+  .visor-barra { padding: 0.6rem 0.8rem; }
+  .visor-pie { padding: 0.6rem 0.8rem; }
+}
+
+/* En el celular la fila de números y los dos botones no entran juntos. */
+@media (max-width: 560px) {
+  .paginacion { justify-content: center; }
+  .pagina.flecha { display: none; }
+  .pagina.ver-mas { width: 100%; }
+}
+
+/* --- cómo pedir --- */
+
+.seccion { padding: 3rem 0; }
+.seccion h2 { margin: 0 0 1.2rem; font-size: 1.5rem; letter-spacing: -0.02em; }
+
+.pasos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.paso {
+  padding: 1.3rem;
+  background: var(--papel);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+}
+
+.paso .n {
+  display: grid;
+  place-items: center;
+  width: 1.9rem;
+  height: 1.9rem;
+  margin-bottom: 0.7rem;
+  border-radius: 50%;
+  background: var(--primario);
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 800;
+}
+
+.paso h3 { margin: 0 0 0.3rem; font-size: 1rem; }
+.paso p { margin: 0; font-size: 0.88rem; color: var(--gris); }
+
+/* --- pie --- */
+
+.pie {
+  padding: 2rem 0;
+  border-top: 1px solid var(--borde);
+  text-align: center;
+  font-size: 0.86rem;
+  color: var(--gris);
+}
+
+.pie p { margin: 0.25rem 0; }
+
+.pie .contacto {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0.6rem 0;
+  font-weight: 600;
+}
+
+.pie .contacto a { color: var(--primario); text-decoration: none; }
+.pie .contacto a:hover { text-decoration: underline; }
+.pie .contacto span { color: var(--gris-claro); }
+
+/* En pantalla chica la tabla no entra: se pasa a tarjetas. */
+@media (max-width: 700px) {
+  .barra-caja { flex-wrap: wrap; }
+  .selector-empresa { order: 3; width: 100%; margin-left: 0; }
+  .boton-whatsapp { margin-left: auto; }
+  .tabla thead { display: none; }
+  .tabla, .tabla tbody, .tabla tr, .tabla td { display: block; width: 100%; }
+  .tabla { border: 0; background: transparent; overflow: visible; }
+  .tabla tr {
+    margin-bottom: 0.5rem;
+    padding: 0.7rem 0.8rem;
+    background: var(--papel);
+    border: 1px solid var(--borde);
+    border-radius: var(--radio);
+  }
+  .tabla td { border: 0; padding: 0.1rem 0; }
+  .tabla td.der { text-align: left; }
+  .tabla td.centro { width: auto; text-align: left; }
+  .tabla td.precio { font-size: 1.05rem; margin: 0.2rem 0; }
+  /* En el celular la foto va arriba de la fila y más grande: es lo primero que
+     el cliente mira, y a 4 rem al costado de un precio no se ve nada. */
+  .td-foto { width: auto; padding: 0 0 0.5rem !important; }
+  .foto-mini { width: 7rem; height: 7rem; }
+
+  /* La cantidad y el botón "+" van en la misma línea de la tarjeta. Si cada uno
+     cae en su propia línea parecen dos campos distintos y el cliente no los
+     asocia como "esto y el botón de al lado". */
+  .tabla td.celda-cant,
+  .tabla td.celda-cant + td {
+    display: inline-block;
+    width: auto;
+    vertical-align: middle;
+  }
+  .tabla td.celda-cant + td { margin-left: 0.6rem; }
+  .etiqueta-cant {
+    display: inline-block;
+    margin-right: 0.4rem;
+    font-size: 0.8rem;
+    color: var(--gris);
+  }
+}
