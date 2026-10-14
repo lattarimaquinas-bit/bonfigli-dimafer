@@ -274,9 +274,23 @@ function dibujar() {
     return (p.descripcion + " " + p.codigo).toLowerCase().includes(texto);
   });
 
+  // Primero se acomoda la página dentro de lo que hay. Si el cliente venía de
+  // la página 12 y escribe algo en el buscador que deja 3 páginas, hay que
+  // bajarlo a la última antes de cortar: si se corta antes, la tabla sale vacía.
+  const totalPaginas = Math.max(1, Math.ceil(lista.length / POR_PAGINA));
+  if (ESTADO.pagina > totalPaginas) ESTADO.pagina = totalPaginas;
+  if (ESTADO.pagina < 1) ESTADO.pagina = 1;
+
   // Con miles de productos, pintar toda la tabla de una vez deja el navegador
-  // sin aire. Se muestran de a 200 por página y el resto se busca o se avanza.
-  const visibles = lista.slice(0, POR_PAGINA);
+  // sin aire. Se muestran de a POR_PAGINA, y el corte arranca en la página que
+  // se está viendo.
+  //
+  // Ojo con esto: antes se hacía lista.slice(0, POR_PAGINA), o sea SIEMPRE los
+  // primeros 200. Los números de página cambiaban el cartelito de arriba pero
+  // no cambiaban una sola fila, y el que iba a la página 12 veía exactamente lo
+  // mismo que en la 1.
+  const desde = (ESTADO.pagina - 1) * POR_PAGINA;
+  const visibles = lista.slice(desde, desde + POR_PAGINA);
 
   $("#filas").innerHTML = visibles
     .map((p) => {
@@ -296,12 +310,8 @@ function dibujar() {
     })
     .join("");
 
-  const quedan = lista.length - visibles.length;
-  const totalPaginas = Math.max(1, Math.ceil(lista.length / POR_PAGINA));
-  if (ESTADO.pagina > totalPaginas) ESTADO.pagina = totalPaginas;
-  if (ESTADO.pagina < 1) ESTADO.pagina = 1;
+  const quedan = Math.max(0, lista.length - desde - visibles.length);
 
-  const desde = (ESTADO.pagina - 1) * POR_PAGINA;
   const hasta = Math.min(desde + POR_PAGINA, lista.length);
   $("#resultado").textContent =
     lista.length === 0
