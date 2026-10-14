@@ -103,6 +103,15 @@ body {
 
 .emp.activo { background: var(--primario); color: #fff; }
 
+.boton-pdf-pedido {
+  background: #fff;
+  color: var(--primario);
+  border: 1.5px solid var(--primario);
+  cursor: pointer;
+}
+.boton-pdf-pedido:hover { background: var(--primario); color: #fff; }
+.boton-pdf-pedido[hidden] { display: none; }
+
 .boton-whatsapp {
   display: inline-flex;
   align-items: center;
