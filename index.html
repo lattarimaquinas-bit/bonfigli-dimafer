@@ -428,6 +428,14 @@ function pintarEmpresa() {
     botonPdf.hidden = true;
   }
 
+  /* Cada empresa tiene su propia lista de precios descargable. */
+  const botonExcel = $("#descargar-excel");
+  const archivoExcel = empresa.id === "dimafer"
+    ? "lista-precios-dimafer.xlsx"
+    : "lista-precios.xlsx";
+  botonExcel.href = archivoExcel;
+  botonExcel.setAttribute("download", archivoExcel);
+
   $("#familia").innerHTML =
     '<option value="">Todas las familias</option>' +
     Object.entries(empresa.familias)
